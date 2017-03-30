@@ -97,7 +97,7 @@
 <meta property="og:description" content="What is a ServiceService官方文档
 服务(Service)是一种应用程序组件代表应用程序的意图，而不是与用户或其他应用程序使用电源的功能执行更长的运行操作。每个服务类必须有一个相应的服务声明在其AndroidManifest.xml。启动服务的方法有Context.startService(), Context.bindService()。
 服务 是运行在他们的主进程的主线程">
-<meta property="og:updated_time" content="2017-03-30T08:39:53.232Z">
+<meta property="og:updated_time" content="2017-03-30T08:55:02.340Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AndroidNote Service(服务)">
 <meta name="twitter:description" content="What is a ServiceService官方文档
@@ -342,14 +342,12 @@
 <p><strong>服务</strong> 是运行在他们的主进程的主线程。这意味着，如果你的服务是要做任何CPU消耗大的操作（如MP3播放）或阻塞（如网络）的操作，它会以它自己的线程去做这项工作。</p>
 <p><strong>Most confusion about the Service class actually revolves around what it is not :</strong></p>
 <ul>
-<li>服务不是一个单独的进程。服务对象本身并不意味着它是在它自己的进程中运行；除非另有规定，它运行在同一进程中的应用就是它的一部分。</li>
-<li>​</li>
+<li>服务不是一个单独的进程。服务对象本身并不意味着它是在它自己的进程中运行；除非另有规定，它运行在同一进程中的应用就是它的一部分。<br>​</li>
 <li>服务不是一个线程。这并不意味着主线程去完成相应工作（避免应用程序无响应的错误）。</li>
 </ul>
 <p><strong>Thus a Service itself is actually very simple, providing two main features :</strong></p>
 <ul>
-<li>用于告诉系统什么要在后台运行（即用户不直接与应用程序交互）,调用<code>Context.startService()</code> 启动服务，这要求系统来管理该服务，该服务会一直运行到明确告诉它停止为止。</li>
-<li>​</li>
+<li>用于告诉系统什么要在后台运行（即用户不直接与应用程序交互）,调用<code>Context.startService()</code> 启动服务，这要求系统来管理该服务，该服务会一直运行到明确告诉它停止为止。<br>​</li>
 <li>一个应用程序提供它的一些功能给其他的应用，这对应<code>Context.bindService()</code>的调用。通过<code>Context.bindService()</code>来准许一个长期的连接，从而让<strong>Service</strong>与其他应用程序交互。</li>
 </ul>
 <h2 id="ServiceLifeCycle-服务的生命周期"><a href="#ServiceLifeCycle-服务的生命周期" class="headerlink" title="ServiceLifeCycle 服务的生命周期"></a>ServiceLifeCycle 服务的生命周期</h2><p>有两个理由可以说明<strong>服务</strong>可以被系统运行。如果有人<code>Context.startService()</code>来启动服务,然后系统会检索服务（创造它，如果需要调用它的<code>oncreate()</code>方法）然后调用<code>onStartCommand(Intent, int, int)</code> 方法。之后该服务将一直运行，直到<code>stopservice()</code>或<code>stopself()</code>被调用。请注意，当服务启动后，再调用<code>Context.startService()</code> 方法时，（<code>onstartcommand()</code>会被调用<code>oncreate()</code>方法不会再次被调用，也就是说服务只会被创建一次，然调用<code>stopservice()</code>或<code>stopself()</code>会停止服务；然而，服务可以用<code>stopSelf（int）</code>来保证服务直到成功打开意图之后才停止。</p>
